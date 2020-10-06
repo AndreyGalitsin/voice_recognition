@@ -10,7 +10,7 @@ class Voice_module:
 
         path_to_session = '/home/ssedunov/voice_recognition/sound/session_' + str(session_number)+'/'
 
-        self.path_to_stereo_wav = path_to_session + 'stereo_wavs/hdcam_1.wav'
+        self.path_to_stereo_wav = path_to_session + 'stereo_wavs/hdcam.wav'
         self.path_to_voiceprint = path_to_session + "voiceprint/identification_phrase.wav"
         self.path_to_save_separated_wavs = path_to_session + 'separated_wavs/'
         self.path_to_save_right_speaker_wav = path_to_session + 'right_speaker'
@@ -32,13 +32,15 @@ class Voice_module:
 
     def main(self):
         speaker_identification = Speaker_identification()
-
+        
         separated_wavs, fs = self.separate_wav()
         
+        
         distances = []
+        
         for sep_wav in separated_wavs:
-            distance = speaker_identification.compare_with_voiceprint(sep_wav, self.path_to_voiceprint)
             
+            distance = speaker_identification.compare_with_voiceprint(sep_wav, self.path_to_voiceprint)            
             distances.append(distance)
 
         dist, idx = min((dist, idx) for (idx, dist) in enumerate(distances))
@@ -46,6 +48,12 @@ class Voice_module:
         right_speaker_wav_path = separated_wavs[idx]
 
         final_res = speech_to_text(right_speaker_wav_path)
+
+        print()
+        print('separated_wavs', separated_wavs)
+        print('distances', distances)
+        print()
+
         return final_res
         
 
@@ -58,4 +66,4 @@ if __name__ == "__main__":
     final_res = voice_module.main()
     t2 = datetime.datetime.now()
     print('Speaker said: ', final_res)
-    print('done!', t2-t1)
+    print('Full time', t2-t1)
