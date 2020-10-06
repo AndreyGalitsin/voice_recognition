@@ -18,13 +18,13 @@ class Make_print:
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 1
         
-        self.model_path = "model"
-        self.spk_model_path = "model-spk"
+        self.model_path = "./vosk_api/model"
+        self.spk_model_path = "./vosk_api/model-spk"
 
     def create_print(self, print_path="./sound/Andrey/identification_phrase.wav"):
         WAVE_OUTPUT_FILENAME = print_path
-        p = pyaudio.PyAudio()
-
+        #p = pyaudio.PyAudio()
+        
         model_path = self.model_path
         spk_model_path = self.spk_model_path
 
@@ -38,7 +38,7 @@ class Make_print:
         model = Model(model_path)
         spk_model = SpkModel(spk_model_path)
         rec = KaldiRecognizer(model, spk_model, wf.getframerate())
-
+        
         voice_print = []
         text = []
         while 1:
@@ -63,6 +63,7 @@ class Make_print:
 
         return voice_print
 
+'''
 if __name__ == "__main__":
     make_print = Make_print()
 
@@ -70,3 +71,4 @@ if __name__ == "__main__":
     voice_print = make_print.create_print(print_path)
 
     print(voice_print)
+'''

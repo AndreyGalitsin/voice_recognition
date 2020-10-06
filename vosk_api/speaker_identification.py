@@ -8,22 +8,25 @@ import json
 import os
 import numpy as np
 from pydub import AudioSegment
-from make_print import Make_print
+from vosk_api.make_print import Make_print
+#from make_print import Make_print
 
 
 class Speaker_identification:
     def __init__(self):
-        self.model_path = "model"
-        self.spk_model_path = "model-spk"
+        self.model_path = "./vosk_api/model"
+        self.spk_model_path = "./vosk_api/model-spk"
+        #self.model_path = "./model"
+        #self.spk_model_path = "./model-spk"
         self.warnings()
 
     def warnings(self):
         if not os.path.exists(self.model_path):
-            print ("Please download the model from https://github.com/alphacep/vosk-api/blob/master/doc/models.md and unpack as {} in the current folder.".format(self.model_path))
+            print ("111 Please download the model from https://github.com/alphacep/vosk-api/blob/master/doc/models.md and unpack as {} in the current folder.".format(self.model_path))
             exit (1)
 
         if not os.path.exists(self.spk_model_path):
-            print ("Please download the speaker model from https://github.com/alphacep/vosk-api/blob/master/doc/models.md and unpack as {} in the current folder.".format(self.spk_model_path))
+            print ("222 Please download the speaker model from https://github.com/alphacep/vosk-api/blob/master/doc/models.md and unpack as {} in the current folder.".format(self.spk_model_path))
             exit (1)
 
     def cosine_dist(self, x, y):
@@ -42,10 +45,9 @@ class Speaker_identification:
         spk_model = SpkModel(self.spk_model_path)
         rec = KaldiRecognizer(model, spk_model, wf.getframerate())
         res = json.loads(rec.Result())
-
+        
         make_print = Make_print()
         voice_print = make_print.create_print(path_to_voiceprint)
-
         while True:
             data = wf.readframes(1000)
             if len(data) == 0:
@@ -60,11 +62,12 @@ class Speaker_identification:
                 distance = self.cosine_dist(voice_print, res['spk'])
                 return distance
 
+
 if __name__ == "__main__":
     speaker_identification = Speaker_identification()
 
-    path_to_test_wav = "./sound/Andrey/ex_1.wav"
-    path_to_voiceprint = "./sound/Andrey/identification_phrase.wav"
+    path_to_test_wav = "/home/ssedunov/voice_recognition/sound/session_1/separated_wavs/spk_2.wav"
+    path_to_voiceprint = "/home/ssedunov/voice_recognition/sound/session_1/voiceprint/identification_phrase.wav"
 
     distance = speaker_identification.compare_with_voiceprint(path_to_test_wav, path_to_voiceprint)
 

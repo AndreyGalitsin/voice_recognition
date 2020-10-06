@@ -6,10 +6,10 @@ import os
 import wave
 import json
 
-SetLogLevel(0)
+#SetLogLevel(0)
 
 def speech_to_text(input_path):
-    if not os.path.exists("model"):
+    if not os.path.exists("./vosk_api/model"):
         print ("Please download the model from https://github.com/alphacep/vosk-api/blob/master/doc/models.md and unpack as 'model' in the current folder.")
         exit (1)
 
@@ -18,7 +18,7 @@ def speech_to_text(input_path):
         print ("Audio file must be WAV format mono PCM.")
         exit (1)
 
-    model = Model("model")
+    model = Model("./vosk_api/model")
     rec = KaldiRecognizer(model, wf.getframerate())
     final_res = []
     while True:
@@ -33,9 +33,10 @@ def speech_to_text(input_path):
     return final_res
     
 
-
+'''
 if __name__ == "__main__":
     input_path = './sound/spk_1.wav'
     final_res = speech_to_text(input_path)
 
     print('Speaker said: ', final_res)
+'''

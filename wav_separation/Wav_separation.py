@@ -45,7 +45,6 @@ class Wav_separation:
         return fs, signal
     
     def save_wav(self, save_path, fs, signal):
-
         signal = signal.astype('int16')
         wavfile.write(save_path, fs, signal)
     
@@ -75,7 +74,7 @@ class Wav_separation:
         y = y[L - hop:, :].T
 
         return mics_signals, y, fs
-
+'''
 if __name__ == "__main__":
     wav_separation = Wav_separation()
     filepath = './hdcam.wav'
@@ -85,6 +84,7 @@ if __name__ == "__main__":
     
     wav_separation.save_wav('./spk_1.wav', fs, sep_1)
     wav_separation.save_wav('./spk_2.wav', fs, sep_2)
+'''
 
 
 
