@@ -1,9 +1,9 @@
 from wav_separation.Wav_separation import Wav_separation
-from vosk_api.make_print import Make_print
 from vosk_api.speaker_identification import Speaker_identification
 from vosk_api.speech_to_text import speech_to_text
 from scipy.io import wavfile
 import datetime
+import os
 
 class Voice_module:
     def __init__(self, session_number=1):
@@ -30,12 +30,19 @@ class Voice_module:
 
         return separated_wavs, fs
 
+    def check_extension(self):
+        if os.path.basename(self.path_to_stereo_wav).split('.')[-1] == 'm4a':
+            self.path_to_stereo_wav = wav_separation.m4a_to_wav(self.path_to_stereo_wav)
+        else: pass
+
+        if os.path.basename(self.path_to_voiceprint).split('.')[-1] == 'm4a':
+            self.path_to_voiceprint = wav_separation.m4a_to_wav(self.path_to_stereo_wav)
+        else: pass
+
     def main(self):
         speaker_identification = Speaker_identification()
-        
+        self.check_extension()
         separated_wavs, fs = self.separate_wav()
-        
-        
         distances = []
         
         for sep_wav in separated_wavs:
