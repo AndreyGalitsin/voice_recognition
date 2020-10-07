@@ -19,7 +19,7 @@ class Wav_separation:
     def __init__(self):
         pass
     
-    def m4a_to_wav(self, filepath):
+    def any_exp_to_wav(self, filepath):
         (path, file_extension) = os.path.splitext(filepath)
         file_extension_final = file_extension.replace('.', '')
         filename = os.path.basename(filepath)

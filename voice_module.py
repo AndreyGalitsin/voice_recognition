@@ -31,12 +31,12 @@ class Voice_module:
         return separated_wavs, fs
 
     def check_extension(self):
-        if os.path.basename(self.path_to_stereo_wav).split('.')[-1] == 'm4a':
-            self.path_to_stereo_wav = wav_separation.m4a_to_wav(self.path_to_stereo_wav)
+        if os.path.basename(self.path_to_stereo_wav).split('.')[-1] != 'wav':
+            self.path_to_stereo_wav = wav_separation.any_exp_to_wav(self.path_to_stereo_wav)
         else: pass
 
-        if os.path.basename(self.path_to_voiceprint).split('.')[-1] == 'm4a':
-            self.path_to_voiceprint = wav_separation.m4a_to_wav(self.path_to_stereo_wav)
+        if os.path.basename(self.path_to_voiceprint).split('.')[-1] != 'wav':
+            self.path_to_voiceprint = wav_separation.any_exp_to_wav(self.path_to_stereo_wav)
         else: pass
 
     def main(self):
