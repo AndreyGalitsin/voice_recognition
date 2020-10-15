@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from vosk import Model, KaldiRecognizer
 import os
 import json

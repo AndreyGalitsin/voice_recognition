@@ -1,24 +1,23 @@
-#!/usr/bin/env python3
-
 from vosk import Model, KaldiRecognizer, SetLogLevel
 import sys
 import os
 import wave
 import json
 
-#SetLogLevel(0)
 
-def speech_to_text(input_path):
+
+def speech_to_text(input_path, model):
+    '''
     if not os.path.exists("./vosk_api/model"):
         print ("Please download the model from https://github.com/alphacep/vosk-api/blob/master/doc/models.md and unpack as 'model' in the current folder.")
         exit (1)
-
+    '''
     wf = wave.open(input_path, "rb")
     if wf.getnchannels() != 1 or wf.getsampwidth() != 2 or wf.getcomptype() != "NONE":
         print ("Audio file must be WAV format mono PCM.")
         exit (1)
 
-    model = Model("./vosk_api/model")
+    #model = Model("./vosk_api/model")
     rec = KaldiRecognizer(model, wf.getframerate())
     final_res = []
     while True:
@@ -32,7 +31,6 @@ def speech_to_text(input_path):
             final_res.append(res)
     return final_res
     
-
 '''
 if __name__ == "__main__":
     input_path = './sound/spk_1.wav'
